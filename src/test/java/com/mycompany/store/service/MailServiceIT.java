@@ -1,8 +1,7 @@
 package com.mycompany.store.service;
 
-import com.mycompany.store.config.Constants;
-
 import com.mycompany.store.StoreApp;
+import com.mycompany.store.config.Constants;
 import com.mycompany.store.domain.User;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +32,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -45,7 +45,8 @@ public class MailServiceIT {
 
     private static final String[] languages = {
         "en",
-        "es"
+        "es",
+        "fr"
         // jhipster-needle-i18n-language-constant - JHipster will add/remove languages in this array
     };
     private static final Pattern PATTERN_LOCALE_3 = Pattern.compile("([a-z]{2})-([a-zA-Z]{4})-([a-z]{2})");
