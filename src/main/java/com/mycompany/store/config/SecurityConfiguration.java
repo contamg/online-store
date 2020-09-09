@@ -1,8 +1,8 @@
 package com.mycompany.store.config;
 
-import com.mycompany.store.security.*;
-import com.mycompany.store.security.jwt.*;
-
+import com.mycompany.store.security.AuthoritiesConstants;
+import com.mycompany.store.security.jwt.JWTConfigurer;
+import com.mycompany.store.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -82,6 +82,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
+            .antMatchers("/api/customers").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/product-categories").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
             .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/websocket/**").permitAll()
