@@ -1,11 +1,10 @@
 package com.mycompany.store.web.rest;
 
 import com.mycompany.store.StoreApp;
-import com.mycompany.store.domain.Shipment;
 import com.mycompany.store.domain.Invoice;
+import com.mycompany.store.domain.Shipment;
 import com.mycompany.store.repository.ShipmentRepository;
 import com.mycompany.store.service.ShipmentService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest(classes = StoreApp.class)
 @AutoConfigureMockMvc
-@WithMockUser
+@WithMockUser(username="admin", authorities={"ROLE_ADMIN"}, password = "admin")
 public class ShipmentResourceIT {
 
     private static final String DEFAULT_TRACKING_CODE = "AAAAAAAAAA";
@@ -181,7 +181,7 @@ public class ShipmentResourceIT {
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].details").value(hasItem(DEFAULT_DETAILS)));
     }
-    
+
     @Test
     @Transactional
     public void getShipment() throws Exception {

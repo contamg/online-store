@@ -3,9 +3,10 @@ package com.mycompany.store.web.rest;
 import com.mycompany.store.StoreApp;
 import com.mycompany.store.domain.Invoice;
 import com.mycompany.store.domain.ProductOrder;
+import com.mycompany.store.domain.enumeration.InvoiceStatus;
+import com.mycompany.store.domain.enumeration.PaymentMethod;
 import com.mycompany.store.repository.InvoiceRepository;
 import com.mycompany.store.service.InvoiceService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -25,15 +27,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.mycompany.store.domain.enumeration.InvoiceStatus;
-import com.mycompany.store.domain.enumeration.PaymentMethod;
 /**
  * Integration tests for the {@link InvoiceResource} REST controller.
  */
 @SpringBootTest(classes = StoreApp.class)
 @AutoConfigureMockMvc
-@WithMockUser
+@WithMockUser(username="admin", authorities={"ROLE_ADMIN"}, password = "admin")
 public class InvoiceResourceIT {
 
     private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
@@ -307,7 +306,7 @@ public class InvoiceResourceIT {
             .andExpect(jsonPath("$.[*].paymentAmount").value(hasItem(DEFAULT_PAYMENT_AMOUNT.intValue())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)));
     }
-    
+
     @Test
     @Transactional
     public void getInvoice() throws Exception {
