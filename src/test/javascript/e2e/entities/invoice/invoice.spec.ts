@@ -1,11 +1,7 @@
-import { browser, ExpectedConditions as ec /* , protractor, promise */ } from 'protractor';
+import { browser, ExpectedConditions as ec } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-import {
-  InvoiceComponentsPage,
-  /* InvoiceDeleteDialog, */
-  InvoiceUpdatePage,
-} from './invoice.page-object';
+import { InvoiceComponentsPage, InvoiceDeleteDialog, InvoiceUpdatePage } from './invoice.page-object';
 
 const expect = chai.expect;
 
@@ -14,7 +10,7 @@ describe('Invoice e2e test', () => {
   let signInPage: SignInPage;
   let invoiceComponentsPage: InvoiceComponentsPage;
   let invoiceUpdatePage: InvoiceUpdatePage;
-  /* let invoiceDeleteDialog: InvoiceDeleteDialog; */
+  let invoiceDeleteDialog: InvoiceDeleteDialog;
 
   before(async () => {
     await browser.get('/');
@@ -39,7 +35,7 @@ describe('Invoice e2e test', () => {
     await invoiceUpdatePage.cancel();
   });
 
-  /* it('should create and save Invoices', async () => {
+  /*it('should create and save Invoices', async () => {
         const nbButtonsBeforeCreate = await invoiceComponentsPage.countDeleteButtons();
 
         await invoiceComponentsPage.clickOnCreateButton();
@@ -65,9 +61,9 @@ describe('Invoice e2e test', () => {
         expect(await invoiceUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
         expect(await invoiceComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-    }); */
+    });
 
-  /* it('should delete last Invoice', async () => {
+  it('should delete last Invoice', async () => {
         const nbButtonsBeforeDelete = await invoiceComponentsPage.countDeleteButtons();
         await invoiceComponentsPage.clickOnLastDeleteButton();
 
@@ -77,7 +73,7 @@ describe('Invoice e2e test', () => {
         await invoiceDeleteDialog.clickOnConfirmButton();
 
         expect(await invoiceComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-    }); */
+    });*/
 
   after(async () => {
     await navBarPage.autoSignOut();

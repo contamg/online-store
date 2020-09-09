@@ -1,11 +1,11 @@
 package com.mycompany.store.web.rest;
 
 import com.mycompany.store.StoreApp;
-import com.mycompany.store.domain.ProductOrder;
 import com.mycompany.store.domain.Customer;
+import com.mycompany.store.domain.ProductOrder;
+import com.mycompany.store.domain.enumeration.OrderStatus;
 import com.mycompany.store.repository.ProductOrderRepository;
 import com.mycompany.store.service.ProductOrderService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -24,14 +25,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.mycompany.store.domain.enumeration.OrderStatus;
 /**
  * Integration tests for the {@link ProductOrderResource} REST controller.
  */
 @SpringBootTest(classes = StoreApp.class)
 @AutoConfigureMockMvc
-@WithMockUser
+@WithMockUser(username="admin", authorities={"ROLE_ADMIN"}, password = "admin")
 public class ProductOrderResourceIT {
 
     private static final Instant DEFAULT_PLACED_DATE = Instant.ofEpochMilli(0L);
@@ -220,7 +219,7 @@ public class ProductOrderResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)));
     }
-    
+
     @Test
     @Transactional
     public void getProductOrder() throws Exception {

@@ -4,9 +4,9 @@ import com.mycompany.store.StoreApp;
 import com.mycompany.store.domain.OrderItem;
 import com.mycompany.store.domain.Product;
 import com.mycompany.store.domain.ProductOrder;
+import com.mycompany.store.domain.enumeration.OrderItemStatus;
 import com.mycompany.store.repository.OrderItemRepository;
 import com.mycompany.store.service.OrderItemService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,14 +25,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.mycompany.store.domain.enumeration.OrderItemStatus;
 /**
  * Integration tests for the {@link OrderItemResource} REST controller.
  */
 @SpringBootTest(classes = StoreApp.class)
 @AutoConfigureMockMvc
-@WithMockUser
+@WithMockUser(username="admin", authorities={"ROLE_ADMIN"}, password = "admin")
 public class OrderItemResourceIT {
 
     private static final Integer DEFAULT_QUANTITY = 0;
@@ -240,7 +239,7 @@ public class OrderItemResourceIT {
             .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(DEFAULT_TOTAL_PRICE.intValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getOrderItem() throws Exception {
