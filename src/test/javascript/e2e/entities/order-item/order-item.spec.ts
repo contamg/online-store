@@ -1,11 +1,7 @@
-import { browser, ExpectedConditions as ec /* , promise */ } from 'protractor';
+import { browser, ExpectedConditions as ec } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-import {
-  OrderItemComponentsPage,
-  /* OrderItemDeleteDialog, */
-  OrderItemUpdatePage,
-} from './order-item.page-object';
+import { OrderItemComponentsPage, OrderItemDeleteDialog, OrderItemUpdatePage } from './order-item.page-object';
 
 const expect = chai.expect;
 
@@ -14,7 +10,7 @@ describe('OrderItem e2e test', () => {
   let signInPage: SignInPage;
   let orderItemComponentsPage: OrderItemComponentsPage;
   let orderItemUpdatePage: OrderItemUpdatePage;
-  /* let orderItemDeleteDialog: OrderItemDeleteDialog; */
+  let orderItemDeleteDialog: OrderItemDeleteDialog;
 
   before(async () => {
     await browser.get('/');
@@ -39,7 +35,7 @@ describe('OrderItem e2e test', () => {
     await orderItemUpdatePage.cancel();
   });
 
-  /* it('should create and save OrderItems', async () => {
+  /*it('should create and save OrderItems', async () => {
         const nbButtonsBeforeCreate = await orderItemComponentsPage.countDeleteButtons();
 
         await orderItemComponentsPage.clickOnCreateButton();
@@ -59,9 +55,9 @@ describe('OrderItem e2e test', () => {
         expect(await orderItemUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
         expect(await orderItemComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-    }); */
+    });
 
-  /* it('should delete last OrderItem', async () => {
+  it('should delete last OrderItem', async () => {
         const nbButtonsBeforeDelete = await orderItemComponentsPage.countDeleteButtons();
         await orderItemComponentsPage.clickOnLastDeleteButton();
 
@@ -71,7 +67,7 @@ describe('OrderItem e2e test', () => {
         await orderItemDeleteDialog.clickOnConfirmButton();
 
         expect(await orderItemComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-    }); */
+    });*/
 
   after(async () => {
     await navBarPage.autoSignOut();
